@@ -10,7 +10,7 @@ on:
     branches: [ main ]
     paths:
       - APIGateway/**
-      - .github/workflows/apigateway.yml
+      - .github/workflows/ApiGateway.yml
 
 jobs:
   build:
