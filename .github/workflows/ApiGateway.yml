@@ -37,6 +37,6 @@ jobs:
         image: samirz5/apigateway
         tags: latest
         registry: docker.io
-        dockerfile: ./Backend/APIGateway
+        dockerfile: ./Backend/APIGateway/Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
