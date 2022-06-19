@@ -39,4 +39,7 @@ jobs:
         registry: docker.io
         dockerfile: ./Backend/APIGateway/Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        password: ${{ secrets.DOCKER_PASSWORD }}  
+    - name: Test2
+      run: dotnet test --no-build --verbosity normal
+      working-directory: Backend/APIGateway
