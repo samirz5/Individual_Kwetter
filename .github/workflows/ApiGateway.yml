@@ -1,0 +1,42 @@
+name: APIGatewayFlow
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - APIGateway/**
+      - .github/workflows/ApiGateway.yml
+  pull_request:
+    branches: [ main ]
+    paths:
+      - APIGateway/**
+      - .github/workflows/ApiGateway.yml
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: Backend/APIGateway
+    - name: Build
+      run: dotnet build --no-restore 
+      working-directory: Backend/APIGateway
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      working-directory: Backend/APIGateway
+    - name: Build and Push Image
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image: samirz5/apigateway
+        tags: latest
+        registry: docker.io
+        dockerfile: ./Backend/APIGateway/Dockerfile
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
