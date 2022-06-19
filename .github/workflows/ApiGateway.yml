@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - APIGateway/**
+      - Backend/APIGateway/**
       - .github/workflows/ApiGateway.yml
   pull_request:
     branches: [ main ]
