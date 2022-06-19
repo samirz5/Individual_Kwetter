@@ -10,7 +10,7 @@ WORKDIR /src
 COPY ["Backend/APIGateway/APIGateway.csproj", "Backend/APIGateway/"]
 RUN dotnet restore "Backend/APIGateway/APIGateway.csproj"
 COPY . .
-WORKDIR "/src/APIGateway"
+WORKDIR "/src/Backend/APIGateway"
 RUN dotnet build "APIGateway.csproj" -c Release -o /app/build
 
 FROM build AS publish
