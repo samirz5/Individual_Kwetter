@@ -31,10 +31,10 @@ namespace Login_Service.Service
 
         public void Register(User user)
         {
-            /*if(GetUser(user.UserName) != null)
+            if (GetUser(user.UserName) != null)
             {
                 throw new DuplicateNameException();
-            }*/
+            }
 
             user.Id = new Guid();
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);

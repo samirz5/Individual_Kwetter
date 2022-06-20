@@ -48,7 +48,7 @@ namespace Tweet_Service
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tweet_Service", Version = "v1" });
             });
-            services.AddDbContext<TweetServiceContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DockerDBConnection")));
+            services.AddDbContext<TweetServiceContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DatabaseConnection")));
 
             services.AddScoped<ITweetService, TweetService>();
 

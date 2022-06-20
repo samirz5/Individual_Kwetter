@@ -65,6 +65,15 @@ namespace Tweet_Service.Service
             return tweet;
         }
 
+        public async void DeleteTweetsByUserId(string userId)
+        {
+            var tweetsToDelete = _context.Tweet.Where(e => e.UserId == Guid.Parse(userId));
+            _context.Tweet.RemoveRange(tweetsToDelete);
+
+            await _context.SaveChangesAsync();
+
+        }
+
         public Tweet GetById(Guid id)
         {
             return _context.Tweet.Find(id);
@@ -151,5 +160,7 @@ namespace Tweet_Service.Service
                 }
             }
         }
+
+        
     }
 }

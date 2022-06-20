@@ -65,13 +65,13 @@
         "PeriodTimespan": 1,
         "Limit": 1
       },
-      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamHttpMethod": [ "DELETE", "PUT", "GET" ],
       "UpstreamPathTemplate": "/tweet-service/recentTweets",
       "DangerousAcceptAnyServerCertificateValidator": true
     }
     
   ],
   "GlobalConfiguration": {
-    //"BaseUrl": "https://localhost:44366"
+    "BaseUrl": "https://localhost:44366"
   }
 }

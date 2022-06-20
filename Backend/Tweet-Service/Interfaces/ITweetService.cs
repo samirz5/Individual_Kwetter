@@ -14,5 +14,7 @@ namespace Tweet_Service.Interfaces
         IEnumerable<Tweet> GetMostRecentTweets();
         IEnumerable<Tweet> GetTweetsByTrend(string trend);
         Task<IEnumerable<Mention>> GetTweetsByMentionAsync();
+        void DeleteTweetsByUserId(string userId);
+
     }
 }

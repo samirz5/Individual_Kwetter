@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UserService.Context;
 using UserService.Models;
+using System.Net.Http;
+using Confluent.Kafka;
 
 namespace UserService.Controllers
 {
@@ -15,6 +17,12 @@ namespace UserService.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UserContext _context;
+        private static readonly HttpClient client = new HttpClient();
+        private readonly string topic = "delete_user_tweets_topic";
+        private readonly ProducerConfig config = new ProducerConfig
+        {
+            BootstrapServers = "localhost:9092"
+        };
 
         public UsersController(UserContext context)
         {
@@ -118,6 +126,7 @@ namespace UserService.Controllers
 
             _context.User.Remove(user);
             await _context.SaveChangesAsync();
+            SendToKafka(topic, id.ToString());
 
             return NoContent();
         }
@@ -130,6 +139,25 @@ namespace UserService.Controllers
         private bool UserNameExists(string userName)
         {
             return _context.User.Any(e => e.UserName == userName);
+        }
+
+        private void SendToKafka(string topic, string message)
+        {
+            using (var producer =
+                new ProducerBuilder<Null, string>(config).Build())
+            {
+                try
+                {
+                    var test = producer.ProduceAsync(topic, new Message<Null, string> { Value = message })
+                        .GetAwaiter()
+                        .GetResult();
+                    Console.WriteLine(test);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Oops, something went wrong: {e}");
+                }
+            }
         }
     }
 }
